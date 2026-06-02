@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>Quartz 5</title>
+      <link>https://ExactWit.github.io</link>
+      <description>Last 10 notes on Quartz 5</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>CG</title>
+    <link>https://ExactWit.github.io/cg/</link>
+    <guid>https://ExactWit.github.io/cg/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Tue, 02 Jun 2026 09:03:10 GMT</pubDate>
+  </item><item>
+    <title>Discussion</title>
+    <link>https://ExactWit.github.io/cg/discussion/</link>
+    <guid>https://ExactWit.github.io/cg/discussion/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Tue, 02 Jun 2026 09:03:10 GMT</pubDate>
+  </item><item>
+    <title>讨论纪要</title>
+    <link>https://ExactWit.github.io/tags/%E8%AE%A8%E8%AE%BA%E7%BA%AA%E8%A6%81</link>
+    <guid>https://ExactWit.github.io/tags/%E8%AE%A8%E8%AE%BA%E7%BA%AA%E8%A6%81</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Tue, 02 Jun 2026 09:03:10 GMT</pubDate>
+  </item><item>
+    <title>Tag Index</title>
+    <link>https://ExactWit.github.io/tags/</link>
+    <guid>https://ExactWit.github.io/tags/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Tue, 02 Jun 2026 09:03:10 GMT</pubDate>
+  </item><item>
+    <title>B-Spline</title>
+    <link>https://ExactWit.github.io/cg/b-spline</link>
+    <guid>https://ExactWit.github.io/cg/b-spline</guid>
+    <description><![CDATA[ 在上一个笔记Bezier Curve，我们考察了贝塞尔曲线的动机、定义、性质，同时给出了曲线的参数连续性、几何连续性以及Frenet曲率序列的陈述。在这个笔记中，我们首先考察B样条曲线提出的动机。 Motivation 我们简单回顾一下贝塞尔曲线的几个缺陷： 1.控制全局性：修改任意控制点会引发全局形状改变，无法进行局部精细调整。 2.次数-控制点数绑定：为了刻画更复杂的形状细节，不得不升高贝塞尔曲线的次数，引发数值不稳定与计算量提升。 3.拼接困难：用多条低阶贝塞尔拼接以表达复杂形状的方案，仍受限于衔接点条件，其C^k性质与近邻k个控制点有关，约束过强，调节困难。 B 样条曲线正是为了系统性... ]]></description>
+    <pubDate>Tue, 02 Jun 2026 09:02:52 GMT</pubDate>
+  </item><item>
+    <title>Bezier Curve</title>
+    <link>https://ExactWit.github.io/cg/bezier-curve</link>
+    <guid>https://ExactWit.github.io/cg/bezier-curve</guid>
+    <description><![CDATA[ 前言 1962 年，皮埃尔・贝塞尔在雷诺汽车公司面临一个核心问题：如何用计算机精确描述汽车车身的复杂曲面？ 当时所有的曲线表示方法都存在致命缺陷： 1. ]]></description>
+    <pubDate>Tue, 02 Jun 2026 09:02:52 GMT</pubDate>
+  </item><item>
+    <title>【20260529】关于校验思想的若干应用</title>
+    <link>https://ExactWit.github.io/cg/discussion/%E3%80%9020260529%E3%80%91%E5%85%B3%E4%BA%8E%E6%A0%A1%E9%AA%8C%E6%80%9D%E6%83%B3%E7%9A%84%E8%8B%A5%E5%B9%B2%E5%BA%94%E7%94%A8</link>
+    <guid>https://ExactWit.github.io/cg/discussion/%E3%80%9020260529%E3%80%91%E5%85%B3%E4%BA%8E%E6%A0%A1%E9%AA%8C%E6%80%9D%E6%83%B3%E7%9A%84%E8%8B%A5%E5%B9%B2%E5%BA%94%E7%94%A8</guid>
+    <description><![CDATA[ 校验思想 样本标注是一项繁琐的工作。或者说，当人工标注稀缺或不可靠时，对于一些特定的任务，我们是否可以找到待处理对象的某些潜在特性，或者设计一些策略，以帮助我们在无标注的情形下达成一些目标？ 朴素的学习方法通常依赖外部的、人为的标注来校对模型的正确性；而如果我们相信：”数据本身就包含了足够的信息来训练模型“，我们完全可以用对象本身的内在规律来校验模型的正确性。 这次讨论以Mesh Segmentation、医学影像分割以及一般的无监督学习任务为示例，探讨了校验思想的逻辑与效用。 Mesh分割中的边界判定问题 Problem 对于\mathbb{R}^3中某几何体的Mesh表示，我们如何确认其上... ]]></description>
+    <pubDate>Fri, 29 May 2026 00:00:00 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>
