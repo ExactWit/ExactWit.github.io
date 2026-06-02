@@ -12,9 +12,6 @@ replit.nix
 .quartz/
 quartz/cli/tui/dist/
 
-# 核心：忽略所有内容文件（symlink指向的CG仓库）260602
-content/
-
 # 忽略Quartz自动生成的临时文件
 .quartz/
 public/

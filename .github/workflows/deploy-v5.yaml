@@ -1,37 +1,63 @@
-name: Deploy v5 Preview
+name: Deploy Quartz to GitHub Pages
 
 on:
   push:
-    branches:
-      - v5
+    branches: [v5]
   workflow_dispatch:
+  repository_dispatch:
+    types: [deploy-blog]  # 所有内容库都用这个事件触发
 
 permissions:
   contents: read
-  deployments: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  deploy-v5:
-    if: ${{ github.repository == 'jackyzha0/quartz' }}
+  build:
     runs-on: ubuntu-latest
-    name: Deploy v5 to Cloudflare Pages
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout Quartz framework
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Setup Node
+      # ====================== 内容库列表开始 ======================
+      # 未来添加新内容库，只需要在这里复制粘贴一个新的Checkout块即可
+      
+      - name: Checkout CG content
+        uses: actions/checkout@v6
+        with:
+          repository: ExactWit/CG
+          path: content/CG  # 克隆到content/CG子目录
+          fetch-depth: 0
+
+      # 示例：未来添加AI库时，取消注释下面这段
+      # - name: Checkout AI content
+      #   uses: actions/checkout@v6
+      #   with:
+      #     repository: ExactWit/AI
+      #     path: content/AI
+      #     fetch-depth: 0
+
+      # 示例：未来添加Math库时，取消注释下面这段
+      # - name: Checkout Math content
+      #   uses: actions/checkout@v6
+      #   with:
+      #     repository: ExactWit/Math
+      #     path: content/Math
+      #     fetch-depth: 0
+
+      # ======================= 内容库列表结束 =======================
+
+      - name: Setup Node.js 22
         uses: actions/setup-node@v6
         with:
-          node-version: 24
-
-      - name: Cache dependencies
-        uses: actions/cache@v5
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: 22
+          cache: 'npm'
 
       - name: Cache Quartz plugins
         uses: actions/cache@v5
@@ -41,24 +67,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-plugins-
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Install Quartz plugins
-        run: npx quartz plugin install
+      - name: Build Quartz site
+        run: npx quartz build
 
-      - name: Check types and style
-        run: npm run check
-
-      - name: Build Quartz
-        run: npx quartz build -d docs -v
-
-      - name: Deploy to Cloudflare Pages
-        uses: AdrianGonz97/refined-cf-pages-action@v1
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          projectName: quartz
-          deploymentName: v5 Branch Preview
-          branch: v5
-          directory: public
+          path: public
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
