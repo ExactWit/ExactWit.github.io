@@ -172,8 +172,8 @@ title: About me
   
   <div class="affiliation">
     Hangzhou Dianzi University (HDU)<br>
-    School of Computer Science & Technology<br>
-    Intelligent Visualization, Modeling and Simulation (IVMS) Lab
+    School of Computer Science<br>
+    Intelligent Visualization, Modeling and Simulation (iGame) Lab
   </div>
   
   <div class="research-tags">
