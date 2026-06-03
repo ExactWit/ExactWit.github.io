@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Quartz 5
+  pageTitle: About Me
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
@@ -244,7 +244,15 @@ plugins:
         GitHub: https://github.com/ExactWit # ✅ 改为你的GitHub
         ORCID: https://orcid.org/0009-0007-2207-7710 # ✅ 添加你的ORCID
   - source: github:quartz-community/recent-notes
-    enabled: false
+    enabled: true
+    options:
+      title: "Recent Updates"
+      limit: 5
+      showTags: true
+      linkToMore: "./tags/updates"
+    layout:
+      position: "right"
+      priority: 10
   - source: github:quartz-community/spacer
     enabled: true
     options: {}

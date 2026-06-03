@@ -1,6 +1,5 @@
 ---
-title: Jin Qian | 钱晋
-description: Ph.D. Candidate in Computer Graphics at Hangzhou Dianzi University
+title: About me
 ---
 
 <style>
