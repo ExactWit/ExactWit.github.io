@@ -328,7 +328,8 @@ mjx-container[display="true"] + p {
 /* ----------------------------------------------------------------------------
    3.1 文件树/目录层级缩进（左侧边框标识）
    ---------------------------------------------------------------------------- */
-.explorer-content,
+
+/* --- 3.1.1 ToC 目录层级样式 --- */
 .toc-content {
   ul {
     margin: 0;
@@ -365,6 +366,131 @@ mjx-container[display="true"] + p {
     &.depth-3 {
       border-left: 1px solid var(--gray);
       padding-left: 1.5rem;
+    }
+  }
+}
+
+/* --- 3.1.2 Explorer 文件树层级样式 --- */
+.explorer-content {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  /* 根级文件夹 - 无缩进，粗体 */
+  > ul > li {
+    font-weight: 600;
+    
+    /* 根级文件夹图标颜色 */
+    > .folder-icon,
+    > a::before {
+      color: var(--primary);
+    }
+  }
+  
+  /* 所有列表项基础样式 */
+  li {
+    position: relative;
+    margin: 0.1rem 0;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: var(--lightgray);
+    }
+  }
+  
+  /* 子层级缩进规则 */
+  
+  /* 第一级子项（直接位于根文件夹下的内容） */
+  > ul > li > ul > li {
+    padding-left: 0.75rem;
+    font-weight: 400;
+    font-size: 0.95em;
+    
+    /* 左侧指示线 */
+    border-left: 2px solid var(--lightgray);
+    margin-left: 0.25rem;
+    
+    &:hover {
+      border-left-color: var(--secondary);
+    }
+  }
+  
+  /* 第二级子项（更深层的嵌套） */
+  > ul > li > ul > li > ul > li {
+    padding-left: 1.5rem;
+    font-size: 0.9em;
+    
+    border-left: 1px solid var(--gray);
+    margin-left: 0.25rem;
+    
+    &:hover {
+      border-left-color: var(--tertiary);
+    }
+  }
+  
+  /* 第三级及以上 */
+  > ul > li > ul > li > ul > li > ul > li {
+    padding-left: 2.25rem;
+    font-size: 0.85em;
+    opacity: 0.9;
+    
+    border-left: 1px solid var(--lightgray);
+    margin-left: 0.25rem;
+  }
+  
+  /* 文件夹与文件的视觉区分 */
+  
+  /* 文件夹样式 */
+  li:has(> ul),
+  li.folder,
+  li[data-folder="true"] {
+    > a {
+      font-weight: 500;
+      
+      /* 文件夹图标 */
+      &::before {
+        content: "📁 ";
+        margin-right: 0.2rem;
+      }
+    }
+  }
+  
+  /* 文件样式 */
+  li:not(:has(> ul)):not(.folder):not([data-folder="true"]) {
+    > a {
+      /* 文件图标 */
+      &::before {
+        content: "📄 ";
+        margin-right: 0.2rem;
+        opacity: 0.7;
+      }
+    }
+  }
+  
+  /* 展开/折叠指示器样式 */
+  li:has(> ul) > a,
+  li.folder > a,
+  li[data-folder="true"] > a {
+    /* 添加展开箭头指示 */
+    position: relative;
+    
+    &::after {
+      content: "▼";
+      font-size: 0.6em;
+      margin-left: 0.3rem;
+      opacity: 0.5;
+      transition: transform 0.2s;
+    }
+  }
+  
+  /* 折叠状态的文件夹 */
+  li.collapsed:has(> ul) > a,
+  li.folder.collapsed > a {
+    &::after {
+      content: "▶";
     }
   }
 }
