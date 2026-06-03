@@ -141,6 +141,30 @@
   --callout-icon: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2 7h7l-5.5 4 2 7-5.5-4-5.5 4 2-7-5.5-4h7z"></path></svg>');
 }
 
+// 问题 (Problem) - 深红
+.callout[data-callout="problem"] {
+  --color: rgb(185, 28, 28) !important;
+  --border: rgba(185, 28, 28, 0.4) !important;
+  --bg: rgba(185, 28, 28, 0.12) !important;
+  --callout-icon: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>');
+}
+
+// 解决方案 (Solution) - 翠绿
+.callout[data-callout="solution"] {
+  --color: rgb(16, 185, 129) !important;
+  --border: rgba(16, 185, 129, 0.4) !important;
+  --bg: rgba(16, 185, 129, 0.12) !important;
+  --callout-icon: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>');
+}
+
+// 结论 (Conclusion) - 深蓝紫
+.callout[data-callout="conclusion"] {
+  --color: rgb(79, 70, 229) !important;
+  --border: rgba(79, 70, 229, 0.4) !important;
+  --bg: rgba(79, 70, 229, 0.12) !important;
+  --callout-icon: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>');
+}
+
 // ============================================
 // 强制应用背景色到 callout 元素
 // ============================================
@@ -160,7 +184,10 @@
 .callout[data-callout="intuition"],
 .callout[data-callout="algorithm"],
 .callout[data-callout="application"],
-.callout[data-callout="motivation"] {
+.callout[data-callout="motivation"],
+.callout[data-callout="problem"],
+.callout[data-callout="solution"],
+.callout[data-callout="conclusion"] {
   background-color: var(--bg) !important;
   border-color: var(--border) !important;
 }
