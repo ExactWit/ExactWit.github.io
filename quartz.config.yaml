@@ -233,7 +233,7 @@ plugins:
         category: Blog Comments
         categoryId: DIC_kwDORg53vc4C-ajq
         mapping: pathname
-        strict: "0"
+        strict: true
         reactionsEnabled: "1"
         emitMetadata: "0"
         inputPosition: bottom
