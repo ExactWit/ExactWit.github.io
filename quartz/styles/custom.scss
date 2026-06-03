@@ -515,3 +515,123 @@ mjx-container[display="true"] + p {
     content: "▶";
   }
 }
+
+/* ============================================================================
+   第四部分：文章页脚 - 创建/修改日期显示
+   ============================================================================ */
+
+/* 页脚容器 - 自动显示在每篇文章底部 */
+article footer.page-footer,
+.article-footer,
+.page-metadata {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--lightgray);
+  font-size: 0.85rem;
+  color: var(--darkgray);
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+article footer.page-footer .meta-item,
+.article-footer .meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+article footer.page-footer .meta-label,
+.article-footer .meta-label {
+  color: var(--gray);
+}
+
+/* 使用 ::after 伪元素显示最后修改时间（需要配合 data 属性） */
+article[data-last-modified]::after,
+.article-content[data-last-modified]::after {
+  content: "📝 Last updated: " attr(data-last-modified);
+  display: block;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--lightgray);
+  font-size: 0.8rem;
+  color: var(--gray);
+  font-style: italic;
+}
+
+/* 简单的页脚样式类 - 供手动添加使用 */
+.page-footer-custom {
+  margin-top: 3rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--lightgray);
+  font-size: 0.85rem;
+  color: var(--darkgray);
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.page-footer-custom .footer-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.page-footer-custom .footer-label {
+  color: var(--gray);
+  font-weight: 500;
+}
+
+/* ============================================================================
+   第五部分：自动日期页脚（由 Git 自动管理）
+   ============================================================================
+   
+   这段样式配合 created-modified-date 插件，自动在页面底部显示创建/修改日期。
+   无需在原始笔记中添加任何内容，由 Git 历史自动提取。
+   ============================================================================ */
+
+/* 页脚日期容器 */
+.auto-date-footer {
+  margin-top: 3rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--lightgray);
+  font-size: 0.85rem;
+  color: var(--darkgray);
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.auto-date-footer .date-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.auto-date-footer .date-icon {
+  font-size: 1rem;
+}
+
+.auto-date-footer .date-label {
+  color: var(--gray);
+  font-weight: 500;
+}
+
+.auto-date-footer .date-value {
+  color: var(--dark);
+  font-family: var(--codeFont);
+}
+
+/* 使用 CSS content 从 data 属性读取日期（需要配合 JS 注入） */
+article[data-created]::after {
+  content: "📅 Created: " attr(data-created) "  |  📝 Modified: " attr(data-modified);
+  display: block;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--lightgray);
+  font-size: 0.8rem;
+  color: var(--gray);
+  text-align: center;
+  font-style: italic;
+}

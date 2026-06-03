@@ -188,6 +188,10 @@ plugins:
       priority: 10
   - source: github:quartz-community/content-meta
     enabled: true
+    options:
+      showDate: true           # 显示日期
+      showReadingTime: true    # 显示阅读时间
+      showWordCount: false     # 不显示字数
     layout:
       position: beforeBody
       priority: 20
@@ -244,15 +248,7 @@ plugins:
         GitHub: https://github.com/ExactWit # ✅ 改为你的GitHub
         ORCID: https://orcid.org/0009-0007-2207-7710 # ✅ 添加你的ORCID
   - source: github:quartz-community/recent-notes
-    enabled: true
-    options:
-      title: "Recent Updates"
-      limit: 5
-      showTags: true
-      linkToMore: "./tags/updates"
-    layout:
-      position: "right"
-      priority: 10
+    enabled: false  # 已禁用：避免与 ToC 冲突，使用单独的 nav 页面代替
   - source: github:quartz-community/spacer
     enabled: true
     options: {}
