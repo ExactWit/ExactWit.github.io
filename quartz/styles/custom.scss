@@ -133,6 +133,14 @@
   --callout-icon: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>');
 }
 
+// 动机/背景 (Motivation) - 玫红
+.callout[data-callout="motivation"] {
+  --color: rgb(225, 29, 72) !important;
+  --border: rgba(225, 29, 72, 0.4) !important;
+  --bg: rgba(225, 29, 72, 0.12) !important;
+  --callout-icon: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2 7h7l-5.5 4 2 7-5.5-4-5.5 4 2-7-5.5-4h7z"></path></svg>');
+}
+
 // ============================================
 // 强制应用背景色到 callout 元素
 // ============================================
@@ -151,7 +159,8 @@
 .callout[data-callout="notation"],
 .callout[data-callout="intuition"],
 .callout[data-callout="algorithm"],
-.callout[data-callout="application"] {
+.callout[data-callout="application"],
+.callout[data-callout="motivation"] {
   background-color: var(--bg) !important;
   border-color: var(--border) !important;
 }
@@ -172,4 +181,69 @@ article th {
 article .text-muted,
 article .muted {
   color: var(--darkgray) !important;
+}
+
+// ============================================
+// 减小块级公式 $$...$$ 的上下间距
+// ============================================
+
+// 所有 MathJax 块级公式容器
+mjx-container[display="true"] {
+    margin: 0.25rem 0 !important;  // 原来是 1rem 或更大，改为 0.5rem
+    
+    svg {
+      margin-top: 0.25rem !important;
+      margin-bottom: 0.25rem !important;
+    }
+  }
+  
+  // 段落与块级公式之间的间距
+  p + mjx-container[display="true"],
+  mjx-container[display="true"] + p {
+    margin-top: 0.5rem !important;
+  }
+  
+  // Callout 内的公式间距稍微紧凑一点
+  .callout mjx-container[display="true"] {
+    margin: 0.35rem 0 !important;
+  }
+  
+  // 方法3：边框左侧缩进（类似 Obsidian）
+.explorer-content,
+.toc-content {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  li {
+    position: relative;
+    margin: 0.1rem 0;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: var(--lightgray);
+    }
+    
+    // 使用左边框表示层级
+    &[data-depth="1"],
+    &.depth-1 {
+      border-left: 3px solid var(--primary);
+      padding-left: 0.5rem;
+    }
+    
+    &[data-depth="2"],
+    &.depth-2 {
+      border-left: 2px solid var(--secondary);
+      padding-left: 1rem;
+    }
+    
+    &[data-depth="3"],
+    &.depth-3 {
+      border-left: 1px solid var(--gray);
+      padding-left: 1.5rem;
+    }
+  }
 }
