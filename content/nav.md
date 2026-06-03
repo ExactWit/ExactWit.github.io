@@ -1,6 +1,5 @@
 ---
 title: Navigation
-description: Explore notes, recent updates, and popular content
 ---
 
 <style>

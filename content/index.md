@@ -270,14 +270,13 @@ title: About me
   <img src="https://github.com/ExactWit.png" alt="Jin Qian" class="avatar" onerror="this.style.display='none'">
   
   <h1>Jin Qian</h1>
-  <div class="name-cn">钱晋</div>
   
   <div class="subtitle">Ph.D. Candidate in Computer Graphics</div>
   
   <div class="affiliation">
     Hangzhou Dianzi University (HDU)<br>
-    School of Computer Science & Technology<br>
-    Intelligent Visualization, Modeling and Simulation (IVMS) Lab
+    School of Computer Science<br>
+    Lab of Graphics & Image Proceccing
   </div>
   
   <div class="research-tags">
