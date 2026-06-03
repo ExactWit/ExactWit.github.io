@@ -229,15 +229,16 @@ plugins:
       provider: giscus
       options:
         repo: ExactWit/ExactWit.github.io
-        repoId: R_kgDOOJwdjA
-        category: Announcements
-        categoryId: DIC_kwDOOJwdjM4CoSNC
+        repoId: R_kgDORg53vQ
+        category: Blog Comments
+        categoryId: DIC_kwDORg53vc4C-ajq
         mapping: pathname
-        strict: true
-        reactionsEnabled: true
+        strict: "0"
+        reactionsEnabled: "1"
+        emitMetadata: "0"
         inputPosition: bottom
-        theme: preferred_color_scheme # ✅ 跟随系统主题
-        lang: zh-CN # ✅ 中文界面
+        theme: preferred_color_scheme
+        lang: zh-CN
     layout:
       position: afterBody
       priority: 10
