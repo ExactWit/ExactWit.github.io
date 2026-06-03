@@ -212,10 +212,17 @@ plugins:
       priority: 5
       condition: not-index
   - source: github:quartz-community/comments
-    enabled: false
+    enabled: true
     options:
       provider: giscus
-      options: {}
+      options:
+        repo: ExactWit/ExactWit.github.io
+        repoId: R_kgDOOJwdjA
+        category: Announcements
+        categoryId: DIC_kwDOOJwdjM4CoSNC
+        mapping: pathname
+        reactionsEnabled: true
+        inputPosition: bottom
     layout:
       position: afterBody
       priority: 10
