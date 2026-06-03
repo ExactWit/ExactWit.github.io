@@ -1,3 +1,124 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+// ============================================
+// 数学 Callout 样式 - 从 Obsidian snippets 同步
+// 源文件: M2nd/.obsidian/snippets/math-callouts.css
+// ============================================
+
+.callout {
+  // 定义 (Definition) - 蓝色
+  &[data-callout="definition"] {
+    --color: rgb(59, 130, 246);
+    --border: rgba(59, 130, 246, 0.27);
+    --bg: rgba(59, 130, 246, 0.15);
+  }
+
+  // 定理 (Theorem) - 紫色
+  &[data-callout="theorem"] {
+    --color: rgb(139, 92, 246);
+    --border: rgba(139, 92, 246, 0.27);
+    --bg: rgba(139, 92, 246, 0.15);
+  }
+
+  // 引理 (Lemma) - 青色
+  &[data-callout="lemma"] {
+    --color: rgb(20, 184, 166);
+    --border: rgba(20, 184, 166, 0.27);
+    --bg: rgba(20, 184, 166, 0.15);
+  }
+
+  // 推论 (Corollary) - 薰衣草
+  &[data-callout="corollary"] {
+    --color: rgb(167, 139, 250);
+    --border: rgba(167, 139, 250, 0.27);
+    --bg: rgba(167, 139, 250, 0.15);
+  }
+
+  // 命题 (Proposition) - 靛蓝
+  &[data-callout="proposition"] {
+    --color: rgb(99, 102, 241);
+    --border: rgba(99, 102, 241, 0.27);
+    --bg: rgba(99, 102, 241, 0.15);
+  }
+
+  // 证明 (Proof) - 灰色
+  &[data-callout="proof"] {
+    --color: rgb(148, 163, 184);
+    --border: rgba(148, 163, 184, 0.27);
+    --bg: rgba(148, 163, 184, 0.15);
+  }
+
+  // 性质 (Property) - 绿色
+  &[data-callout="property"] {
+    --color: rgb(34, 197, 94);
+    --border: rgba(34, 197, 94, 0.27);
+    --bg: rgba(34, 197, 94, 0.15);
+  }
+
+  // 注记 (Remark) - 橙色
+  &[data-callout="remark"] {
+    --color: rgb(251, 146, 60);
+    --border: rgba(251, 146, 60, 0.27);
+    --bg: rgba(251, 146, 60, 0.15);
+  }
+
+  // 例子 (Example) - 金黄
+  &[data-callout="example"] {
+    --color: rgb(245, 158, 11);
+    --border: rgba(245, 158, 11, 0.27);
+    --bg: rgba(245, 158, 11, 0.15);
+  }
+
+  // 公理 (Axiom) - 深红
+  &[data-callout="axiom"] {
+    --color: rgb(220, 38, 38);
+    --border: rgba(220, 38, 38, 0.27);
+    --bg: rgba(220, 38, 38, 0.15);
+  }
+
+  // 记号约定 (Notation) - 棕色
+  &[data-callout="notation"] {
+    --color: rgb(180, 120, 60);
+    --border: rgba(180, 120, 60, 0.27);
+    --bg: rgba(180, 120, 60, 0.15);
+  }
+
+  // 直觉 (Intuition) - 粉色
+  &[data-callout="intuition"] {
+    --color: rgb(236, 72, 153);
+    --border: rgba(236, 72, 153, 0.27);
+    --bg: rgba(236, 72, 153, 0.15);
+  }
+
+  // 算法 (Algorithm) - 深青
+  &[data-callout="algorithm"] {
+    --color: rgb(6, 182, 212);
+    --border: rgba(6, 182, 212, 0.27);
+    --bg: rgba(6, 182, 212, 0.15);
+  }
+
+  // 应用 (Application) - 草绿
+  &[data-callout="application"] {
+    --color: rgb(132, 204, 22);
+    --border: rgba(132, 204, 22, 0.27);
+    --bg: rgba(132, 204, 22, 0.15);
+  }
+}
+
+// ============================================
+// 正文颜色修复 - 去除灰度
+// ============================================
+
+article p,
+article span,
+article li,
+article td,
+article th {
+  color: var(--dark) !important;
+}
+
+// 保持 muted 文本的灰度
+article .text-muted,
+article .muted {
+  color: var(--darkgray) !important;
+}
