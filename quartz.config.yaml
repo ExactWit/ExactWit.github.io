@@ -94,13 +94,20 @@ plugins:
   - source: github:quartz-community/latex
     enabled: true
     options:
-      renderEngine: katex
+      renderEngine: mathjax
+      strict: false
+      trust: true
+      tex:
+        packages: {"[+]": ["ams", "amssymb", "amsmath", "physics"]}
+        tags: "ams"
+      svg:
+        scale: 1.1
     order: 80
   - source: github:quartz-community/citations
     enabled: false
     order: 85
   - source: github:quartz-community/hard-line-breaks
-    enabled: true
+    enabled: false
     order: 90
   - source: github:quartz-community/ox-hugo
     enabled: false
@@ -136,6 +143,7 @@ plugins:
     options:
       enableSiteMap: true
       enableRSS: true
+      recursive: true
   - source: github:quartz-community/favicon
     enabled: true
   - source: github:quartz-community/og-image
@@ -221,8 +229,11 @@ plugins:
         category: Announcements
         categoryId: DIC_kwDOOJwdjM4CoSNC
         mapping: pathname
+        strict: true
         reactionsEnabled: true
         inputPosition: bottom
+        theme: preferred_color_scheme # ✅ 跟随系统主题
+        lang: zh-CN # ✅ 中文界面
     layout:
       position: afterBody
       priority: 10
@@ -230,8 +241,8 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/jackyzha0/quartz
-        Discord Community: https://discord.gg/cRFFHYye7t
+        GitHub: https://github.com/ExactWit # ✅ 改为你的GitHub
+        ORCID: https://orcid.org/0009-0007-2207-7710 # ✅ 添加你的ORCID
   - source: github:quartz-community/recent-notes
     enabled: false
   - source: github:quartz-community/spacer
