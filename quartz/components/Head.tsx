@@ -106,6 +106,8 @@ export default (() => {
             return resource
           }
         })}
+        {/* Lightbox 图片查看器脚本 */}
+        <script src="/static/scripts/lightbox.js" defer></script>
       </head>
     )
   }

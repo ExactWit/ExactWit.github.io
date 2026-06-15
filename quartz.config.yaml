@@ -40,9 +40,6 @@ configuration:
         tertiary: "#84a59d"
         highlight: rgba(143, 159, 169, 0.15)
         textHighlight: "#b3aa0288"
-  # 附加 lightbox 脚本到页面
-additionalHead:
-  - <script src="/static/scripts/lightbox.js" defer></script>
 plugins:
   - source: github:quartz-community/created-modified-date
     enabled: true
