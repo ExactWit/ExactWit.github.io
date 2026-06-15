@@ -211,9 +211,10 @@ title: Navigation
 </div>
 
 <script>
-// Simple search functionality
+// Navigation page functionality
 document.addEventListener('DOMContentLoaded', function() {
   const searchInput = document.getElementById('search-input');
+  const recentList = document.getElementById('recent-list');
   
   // Focus search on '/' key
   document.addEventListener('keydown', function(e) {
@@ -223,38 +224,79 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Fetch recent notes dynamically
-  async function fetchRecentNotes() {
+  // Fetch and display recent notes from content index
+  async function loadRecentNotes() {
     try {
-      // This would need a backend API or build-time generation
-      // For now, we'll show placeholder content
-      const recentList = document.getElementById('recent-list');
+      // Use Quartz's pre-defined fetchData (loads static/contentIndex.json)
+      const contentData = await (window.fetchData || fetch('./static/contentIndex.json').then(r => r.json()));
       
-      // Try to get recent notes from the explorer or other sources
-      // This is a simplified version - in production, you'd fetch from an API
-      const recentNotes = [
-        { title: 'Bezier Curves', path: './cg/曲面曲线/bezier-curve', date: '2025-01-15', tag: 'CG' },
-        { title: 'B-Spline Fundamentals', path: './cg/曲面曲线/b-spline', date: '2025-01-10', tag: 'CG' },
-      ];
+      // Extract all pages with dates
+      const pages = Object.entries(contentData)
+        .filter(([slug, data]) => {
+          // Filter out index pages and nav page itself
+          if (slug === 'nav' || slug === 'index' || slug.endsWith('/index')) return false;
+          // Only include pages with dates
+          return data.dates?.modified || data.dates?.created;
+        })
+        .map(([slug, data]) => ({
+          slug,
+          title: data.title || slug.split('/').pop().replace(/-/g, ' '),
+          date: data.dates?.modified || data.dates?.created,
+          tags: data.tags || []
+        }));
+      
+      // Sort by date (newest first)
+      pages.sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      // Take top 6
+      const recentNotes = pages.slice(0, 6);
       
       if (recentNotes.length > 0) {
-        recentList.innerHTML = recentNotes.map(note => `
-          <li>
-            <a href="${note.path}">
-              <span>${note.title} <span class="tag">${note.tag}</span></span>
-              <span class="meta">${note.date}</span>
-            </a>
-          </li>
-        `).join('');
+        const formatDate = (dateStr) => {
+          const date = new Date(dateStr);
+          const now = new Date();
+          const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+          
+          if (diffDays === 0) return 'Today';
+          if (diffDays === 1) return 'Yesterday';
+          if (diffDays < 7) return `${diffDays} days ago`;
+          if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+          return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        };
+        
+        const getFirstTag = (tags) => {
+          if (!tags || tags.length === 0) return 'Note';
+          return tags[0];
+        };
+        
+        recentList.innerHTML = recentNotes.map(note => {
+          const tag = getFirstTag(note.tags);
+          const displayDate = formatDate(note.date);
+          const path = './' + note.slug;
+          
+          return `
+            <li>
+              <a href="${path}">
+                <span>${note.title} <span class="tag">${tag}</span></span>
+                <span class="meta">${displayDate}</span>
+              </a>
+            </li>
+          `;
+        }).join('');
       } else {
-        recentList.innerHTML = '<li><em>No recent updates</em></li>';
+        recentList.innerHTML = '<li><em>No notes found</em></li>';
       }
     } catch (error) {
-      console.error('Error fetching recent notes:', error);
+      console.error('Error loading recent notes:', error);
+      recentList.innerHTML = '<li><em>Unable to load recent notes</em></li>';
     }
   }
   
-  fetchRecentNotes();
+  // Load recent notes
+  loadRecentNotes();
+  
+  // Refresh on SPA navigation
+  document.addEventListener('nav', loadRecentNotes);
 });
 </script>
 
