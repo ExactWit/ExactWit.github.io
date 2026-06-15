@@ -224,32 +224,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Fetch and display recent notes from content index
+  // Fetch and display recent notes from build-generated index
   async function loadRecentNotes() {
     try {
-      // Use Quartz's pre-defined fetchData (loads static/contentIndex.json)
-      const contentData = await (window.fetchData || fetch('./static/contentIndex.json').then(r => r.json()));
+      // Load recent updates generated at build time (includes all remote content repos)
+      const response = await fetch('./static/recent-updates.json');
+      if (!response.ok) throw new Error('Failed to load recent updates');
       
-      // Extract all pages with dates
-      const pages = Object.entries(contentData)
-        .filter(([slug, data]) => {
-          // Filter out index pages and nav page itself
-          if (slug === 'nav' || slug === 'index' || slug.endsWith('/index')) return false;
-          // Only include pages with dates
-          return data.dates?.modified || data.dates?.created;
-        })
-        .map(([slug, data]) => ({
-          slug,
-          title: data.title || slug.split('/').pop().replace(/-/g, ' '),
-          date: data.dates?.modified || data.dates?.created,
-          tags: data.tags || []
-        }));
-      
-      // Sort by date (newest first)
-      pages.sort((a, b) => new Date(b.date) - new Date(a.date));
-      
-      // Take top 6
-      const recentNotes = pages.slice(0, 6);
+      const data = await response.json();
+      const recentNotes = data.notes || [];
       
       if (recentNotes.length > 0) {
         const formatDate = (dateStr) => {
@@ -264,15 +247,24 @@ document.addEventListener('DOMContentLoaded', function() {
           return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         };
         
-        const getFirstTag = (tags) => {
-          if (!tags || tags.length === 0) return 'Note';
-          return tags[0];
+        const getFirstTag = (tags, folder) => {
+          if (tags && tags.length > 0) return tags[0];
+          // Use folder name as fallback tag
+          const folderTags = {
+            'cg': 'CG',
+            'notes': 'Note',
+            'blog': 'Blog',
+            'research': 'Research'
+          };
+          return folderTags[folder] || folder.toUpperCase();
         };
         
         recentList.innerHTML = recentNotes.map(note => {
-          const tag = getFirstTag(note.tags);
+          const tag = getFirstTag(note.tags, note.folder);
           const displayDate = formatDate(note.date);
-          const path = './' + note.slug;
+          // Handle Chinese characters in slug
+          const encodedSlug = note.slug.split('/').map(part => encodeURIComponent(part)).join('/');
+          const path = './' + encodedSlug;
           
           return `
             <li>
@@ -284,11 +276,11 @@ document.addEventListener('DOMContentLoaded', function() {
           `;
         }).join('');
       } else {
-        recentList.innerHTML = '<li><em>No notes found</em></li>';
+        recentList.innerHTML = '<li><em>No recent updates</em></li>';
       }
     } catch (error) {
       console.error('Error loading recent notes:', error);
-      recentList.innerHTML = '<li><em>Unable to load recent notes</em></li>';
+      recentList.innerHTML = '<li><em>Unable to load recent updates</em></li>';
     }
   }
   
