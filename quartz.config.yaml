@@ -305,16 +305,26 @@ layout:
         beforeBody: []
         left: []
         right: []
-    content: {}
+    content:
+      positions:
+        afterBody:
+          - component: Lightbox
+            priority: 10
     folder:
       exclude:
         - reader-mode
       positions:
         right: []
+        afterBody:
+          - component: Lightbox
+            priority: 10
     tag:
       exclude:
         - reader-mode
       positions:
         right: []
+        afterBody:
+          - component: Lightbox
+            priority: 10
     canvas: {}
     bases: {}
