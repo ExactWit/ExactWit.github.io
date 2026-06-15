@@ -42,7 +42,7 @@ configuration:
         textHighlight: "#b3aa0288"
   # 附加 lightbox 脚本到页面
 additionalHead:
-  - <script src="/scripts/lightbox.js" defer></script>
+  - <script src="/static/scripts/lightbox.js" defer></script>
 plugins:
   - source: github:quartz-community/created-modified-date
     enabled: true
