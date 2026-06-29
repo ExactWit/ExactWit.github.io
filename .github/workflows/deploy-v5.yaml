@@ -73,6 +73,9 @@ jobs:
       - name: Install Quartz plugins
         run: npm run install-plugins
 
+      - name: Inject recent notes into nav
+        run: node scripts/inject-nav-recent.mjs
+
       - name: Build Quartz site
         run: npx quartz build
 

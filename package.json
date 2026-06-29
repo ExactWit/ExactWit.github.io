@@ -20,8 +20,8 @@
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
     "install-plugins": "npx tsx ./quartz/plugins/loader/install-plugins.ts",
     "fetch-orcid": "node scripts/fetch-orcid.mjs",
-    "generate-recent": "node scripts/generate-recent-updates.mjs",
-    "prebuild": "npm run install-plugins && npm run fetch-orcid && npm run generate-recent"
+    "inject-nav-recent": "node scripts/inject-nav-recent.mjs",
+    "prebuild": "npm run install-plugins && npm run fetch-orcid"
   },
   "engines": {
     "npm": ">=10.9.2",

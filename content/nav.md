@@ -82,6 +82,122 @@ title: Navigation
   margin-left: 0.5rem;
 }
 
+.recent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recent-item {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--gray) 25%, transparent);
+}
+
+.recent-item:last-child {
+  border-bottom: none;
+}
+
+.recent-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--dark);
+}
+
+.recent-link:hover .recent-title {
+  color: var(--secondary);
+}
+
+.recent-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.recent-title {
+  font-weight: 600;
+  line-height: 1.4;
+  transition: color 0.2s;
+}
+
+.recent-tag {
+  display: inline-block;
+  background: var(--secondary);
+  color: white;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.recent-meta {
+  font-size: 0.78rem;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.recent-desc {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--darkgray);
+}
+
+.recent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.recent-primary,
+.recent-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.recent-primary {
+  background: var(--secondary);
+  color: white;
+}
+
+.recent-secondary {
+  background: transparent;
+  color: var(--secondary);
+  border: 1px solid color-mix(in srgb, var(--secondary) 35%, transparent);
+}
+
+.recent-primary:hover,
+.recent-secondary:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.recent-empty {
+  color: var(--darkgray);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.nav-card-wide {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 900px) {
+  .nav-card-wide {
+    grid-column: span 2;
+  }
+}
+
 .search-box {
   max-width: 600px;
   margin: 2rem auto;
@@ -153,15 +269,13 @@ title: Navigation
 </div>
 
 <div class="nav-grid">
-  <!-- Recent Updates -->
-  <div class="nav-card" style="border-left-color: var(--secondary);">
-    <h2 style="--tw-prose-headings: var(--secondary);">📝 Recent Updates</h2>
-    <ul id="recent-list">
-      <li><em>Loading recent notes...</em></li>
-    </ul>
-    <div class="view-all">
-      <a href="./tags/updates">View All Updates</a>
-    </div>
+  <!-- 最近更新：由 scripts/inject-nav-recent.mjs 在 CI 构建前注入 -->
+  <div class="nav-card nav-card-wide" style="border-left-color: var(--secondary);">
+    <h2>📝 最近更新</h2>
+    <p class="meta" style="margin: -0.5rem 0 1rem;">按修改时间排序，方便直接跳转到最新笔记</p>
+    <!-- RECENT_NOTES_START -->
+    <div class="recent-empty">部署后会自动显示各内容库的最新笔记。</div>
+    <!-- RECENT_NOTES_END -->
   </div>
 
   <!-- Popular Tags -->
@@ -211,84 +325,15 @@ title: Navigation
 </div>
 
 <script>
-// Navigation page functionality
 document.addEventListener('DOMContentLoaded', function() {
   const searchInput = document.getElementById('search-input');
-  const recentList = document.getElementById('recent-list');
-  
-  // Focus search on '/' key
+
   document.addEventListener('keydown', function(e) {
     if (e.key === '/' && document.activeElement !== searchInput) {
       e.preventDefault();
       searchInput.focus();
     }
   });
-  
-  // Fetch and display recent notes from build-generated index
-  async function loadRecentNotes() {
-    try {
-      // Load recent updates generated at build time (includes all remote content repos)
-      const response = await fetch('./static/recent-updates.json');
-      if (!response.ok) throw new Error('Failed to load recent updates');
-      
-      const data = await response.json();
-      const recentNotes = data.notes || [];
-      
-      if (recentNotes.length > 0) {
-        const formatDate = (dateStr) => {
-          const date = new Date(dateStr);
-          const now = new Date();
-          const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-          
-          if (diffDays === 0) return 'Today';
-          if (diffDays === 1) return 'Yesterday';
-          if (diffDays < 7) return `${diffDays} days ago`;
-          if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-          return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        };
-        
-        const getFirstTag = (tags, folder) => {
-          if (tags && tags.length > 0) return tags[0];
-          // Use folder name as fallback tag
-          const folderTags = {
-            'cg': 'CG',
-            'notes': 'Note',
-            'blog': 'Blog',
-            'research': 'Research'
-          };
-          return folderTags[folder] || folder.toUpperCase();
-        };
-        
-        recentList.innerHTML = recentNotes.map(note => {
-          const tag = getFirstTag(note.tags, note.folder);
-          const displayDate = formatDate(note.date);
-          // Handle Chinese characters in slug
-          const encodedSlug = note.slug.split('/').map(part => encodeURIComponent(part)).join('/');
-          const path = './' + encodedSlug;
-          
-          return `
-            <li>
-              <a href="${path}">
-                <span>${note.title} <span class="tag">${tag}</span></span>
-                <span class="meta">${displayDate}</span>
-              </a>
-            </li>
-          `;
-        }).join('');
-      } else {
-        recentList.innerHTML = '<li><em>No recent updates</em></li>';
-      }
-    } catch (error) {
-      console.error('Error loading recent notes:', error);
-      recentList.innerHTML = '<li><em>Unable to load recent updates</em></li>';
-    }
-  }
-  
-  // Load recent notes
-  loadRecentNotes();
-  
-  // Refresh on SPA navigation
-  document.addEventListener('nav', loadRecentNotes);
 });
 </script>
 
