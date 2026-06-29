@@ -132,6 +132,11 @@ function getDescription(content, frontmatter) {
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<[^>]+>/g, " ")
+    .replace(/\$\$[\s\S]*?\$\$/g, " ")
+    .replace(/\$[^$\n]+\$/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, " ")
+    .replace(/\[[^\]]*\]\([^)]+\)/g, " ")
+    .replace(/https?:\/\/\S+/g, " ")
     .replace(/[#>*`\[\]()!|-]/g, " ")
     .replace(/\s+/g, " ")
     .trim()
@@ -216,7 +221,7 @@ async function scanDirectory(dir, basePath = "") {
 
 function renderRecentSection(notes) {
   if (notes.length === 0) {
-    return `<div class="recent-empty">暂无笔记。内容库更新并部署后会自动出现在这里。</div>`
+    return `    <div class="recent-empty">暂无笔记。内容库更新并部署后会自动出现在这里。</div>`
   }
 
   const items = notes
@@ -224,19 +229,17 @@ function renderRecentSection(notes) {
       const tag = note.tags[0] || LIB_LABELS[note.library] || note.library.toUpperCase()
       const dateLabel = formatRelativeDate(note.date)
       const description = note.description
-        ? `<p class="recent-desc">${escapeHtml(note.description)}</p>`
+        ? `\n        <p class="recent-desc">${escapeHtml(note.description)}</p>`
         : ""
 
-      return `
-      <li class="recent-item">
+      return `      <li class="recent-item">
         <a href="${note.href}" class="recent-link">
           <span class="recent-main">
             <span class="recent-title">${escapeHtml(note.title)}</span>
             <span class="recent-tag">${escapeHtml(tag)}</span>
           </span>
           <span class="recent-meta">${dateLabel}</span>
-        </a>
-        ${description}
+        </a>${description}
       </li>`
     })
     .join("\n")
@@ -244,14 +247,13 @@ function renderRecentSection(notes) {
   const latest = notes[0]
   const browseHref = latest.library ? `./${latest.library}/` : "./cg/"
 
-  return `
-<ul class="recent-list">
+  return `    <ul class="recent-list">
 ${items}
-</ul>
-<div class="recent-actions">
-  <a class="recent-primary" href="${latest.href}">阅读最新：${escapeHtml(latest.title)}</a>
-  <a class="recent-secondary" href="${browseHref}">浏览 ${LIB_LABELS[latest.library] || latest.library} 库</a>
-</div>`
+    </ul>
+    <div class="recent-actions">
+      <a class="recent-primary" href="${latest.href}">阅读最新：${escapeHtml(latest.title)}</a>
+      <a class="recent-secondary" href="${browseHref}">浏览 ${LIB_LABELS[latest.library] || latest.library} 库</a>
+    </div>`
 }
 
 async function injectRecentNotes() {
@@ -273,7 +275,9 @@ async function injectRecentNotes() {
   const section = renderRecentSection(recentNotes)
   navContent =
     navContent.slice(0, start + START_MARKER.length) +
+    "\n" +
     section +
+    "\n    " +
     navContent.slice(end)
 
   await fs.writeFile(NAV_FILE, navContent)
