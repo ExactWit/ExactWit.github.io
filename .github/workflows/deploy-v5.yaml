@@ -35,20 +35,19 @@ jobs:
           path: content/CG  # 克隆到content/CG子目录
           fetch-depth: 0
 
+      - name: Checkout TG content
+        uses: actions/checkout@v6
+        with:
+          repository: ExactWit/TG
+          path: content/TG
+          fetch-depth: 0
+
       # 示例：未来添加AI库时，取消注释下面这段
       # - name: Checkout AI content
       #   uses: actions/checkout@v6
       #   with:
       #     repository: ExactWit/AI
       #     path: content/AI
-      #     fetch-depth: 0
-
-      # 示例：未来添加Math库时，取消注释下面这段
-      # - name: Checkout Math content
-      #   uses: actions/checkout@v6
-      #   with:
-      #     repository: ExactWit/Math
-      #     path: content/Math
       #     fetch-depth: 0
 
       # ======================= 内容库列表结束 =======================

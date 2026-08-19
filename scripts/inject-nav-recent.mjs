@@ -17,6 +17,7 @@ const MAX_NOTES = 10
 
 const LIB_LABELS = {
   cg: "CG",
+  tg: "TG",
   ai: "AI",
   math: "Math",
   notes: "Notes",
