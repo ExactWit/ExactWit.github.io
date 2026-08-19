@@ -24,3 +24,7 @@ package-lock.json
 **/.trash/**
 **/.DS_Store
 /content/templates
+# 本地内容库 junction（远程由 Actions checkout，勿提交）
+/content/CG
+/content/TG
+
